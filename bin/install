@@ -1,0 +1,16 @@
+#!/bin/bash
+
+DIR=$(pwd)
+VSCODE="$HOME/Library/Application Support/Code/User"
+
+cp $DIR/.bash_profile $HOME/
+
+cp $DIR/.bashrc $HOME/
+
+cp $DIR/.vimrc $HOME/
+
+cp $DIR/.emacs.d/init.el $HOME/.emacs.d/
+
+cp  $DIR/vscode/keybindings.json "$VSCODE/keybindings.json"
+cp  $DIR/vscode/settings.json "$VSCODE/settings.json"
+
