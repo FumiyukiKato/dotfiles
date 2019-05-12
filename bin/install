@@ -9,6 +9,8 @@ cp $DIR/.bashrc $HOME/
 
 cp $DIR/.vimrc $HOME/
 
+cp $DIR/.tmux.conf $HOME/
+
 cp $DIR/.emacs.d/init.el $HOME/.emacs.d/
 
 cp  $DIR/vscode/keybindings.json "$VSCODE/keybindings.json"
