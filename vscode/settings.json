@@ -1,0 +1,8 @@
+{
+    "breadcrumbs.enabled": true,
+    "workbench.colorTheme": "Darcula Theme from IntelliJ",
+    "window.zoomLevel": 1,
+    "workbench.editor.showTabs": true,
+    "python.jediEnabled": false,
+    "explorer.confirmDelete": false
+}
