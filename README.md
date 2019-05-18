@@ -8,4 +8,4 @@ configuration files
 `cp .tmux/wifi /usr/local/bin/`  
 
 ### emacs
- `M-x list-package`
+ `M-x list-package` to install xclip intellij-darcula-color-cheama
