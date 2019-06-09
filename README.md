@@ -9,3 +9,7 @@ configuration files
 
 ### emacs
  `M-x list-package` to install xclip intellij-darcula-color-cheama
+
+### system
+brew install reattach-to-user-namespace
+
