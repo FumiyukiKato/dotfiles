@@ -1,6 +1,7 @@
 # dotfiles
 configuration files
 
+- 自分のマシンの状態にリポジトリをupdateするスクリプトとinstallするスクリプトがあるけど忘れた
 
 ### tmux
 `brew install tmux`  
