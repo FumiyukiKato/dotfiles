@@ -8,6 +8,9 @@ configuration files
 `cp .tmux/battery /usr/local/bin/`  
 `cp .tmux/wifi /usr/local/bin/`  
 
+### peco 
+ `brew install peco`
+
 ### emacs
  `M-x list-package` to install xclip intellij-darcula-color-cheama
 
