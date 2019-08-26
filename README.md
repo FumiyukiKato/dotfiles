@@ -17,3 +17,6 @@ configuration files
 ### system
 brew install reattach-to-user-namespace
 
+### terminal color schema
+https://cocopon.github.io/iceberg.vim/
+
