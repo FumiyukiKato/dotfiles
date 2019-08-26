@@ -1,0 +1,26 @@
+#!/bin/bash
+
+DIR=$(pwd)
+if type "zsh" > /dev/null 2>&1; then
+    echo "zsh is found! Setting install is suceess."     
+else
+    echo "zsh is NOT exist! execute brew install zsh"
+    brew update
+    brew install zsh
+fi
+
+git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+setopt EXTENDED_GLOB
+for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+done
+
+brew install peco
+
+yes | cp $DIR/zsh/.zshrc $HOME/
+yes | cp $DIR/zsh/.zprofile $HOME/
+
+source ~/.zshrc
+
+bin/tmux_install
+bin/editor_setting

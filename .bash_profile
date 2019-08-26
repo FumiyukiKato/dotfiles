@@ -7,12 +7,6 @@ eval "$(rbenv init -)"
 
 export PS1="\w $ "
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/fumiyuki/google-cloud-sdk/path.bash.inc' ]; then source '/Users/fumiyuki/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/fumiyuki/google-cloud-sdk/completion.bash.inc' ]; then source '/Users/fumiyuki/google-cloud-sdk/completion.bash.inc'; fi
-
 
 HISTSIZE=5000
 HISTFILESIZE=5000
