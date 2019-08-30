@@ -16,7 +16,12 @@ $ bin/zsh_install
 ```
 
 ### emacs
- `M-x list-package` to install xclip intellij-darcula-color-cheama
+- List packages `M-x list-package`
+- Move to next window `C-x o`
+- plugins
+ - xclip 
+ - idea-darkula-theme
+ - ...
 
 ### terminal color schema
 https://cocopon.github.io/iceberg.vim/
