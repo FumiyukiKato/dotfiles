@@ -7,7 +7,7 @@ configuration files
 $ brew update
 $ brew install zsh
 
-$ sudo echo "/usr/local/bin/zsh" >> /etc/shells  # (vi /etc/shells)
+$ sudo vi /etc/shells # add "/usr/local/bin/zsh"
 $ chsh -s /usr/local/bin/zsh
 $ zsh
 
