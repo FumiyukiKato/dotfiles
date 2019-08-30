@@ -9,6 +9,7 @@ for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
 done
 
 brew install peco
+brew install reattach-to-user-namespace
 
 yes | cp $DIR/zsh/.zshrc $HOME/
 yes | cp $DIR/zsh/.zprofile $HOME/

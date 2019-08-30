@@ -23,7 +23,7 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 # Prompt
 autoload colors
 colors
-PROMPT='%{${fg[cyan]}%}[%~] %T%{${reset_color}%}
+PROMPT='%{${fg[cyan]}%}[%~] %W %T%{${reset_color}%}
 $ '
 
 # added by Anaconda3 5.0.1 installer

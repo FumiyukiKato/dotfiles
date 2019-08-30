@@ -2,11 +2,20 @@
 
 ;; MELPAを追加
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-
 (package-initialize)
 
-;; osのクリップボードを使う("https://saitodev.co/article/Emacs%E3%81%A7%E3%82%AF%E3%83%AA%E3%83%83%E3%83%97%E3%83%9C%E3%83%BC%E3%83%89%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%82%B3%E3%83%94%E3%83%9A%E3%81%97%E3%81%9F%E3%81%84")もしかしたらtmuxを再起動した時にxclipが動かなくなるかも
+;; to use use-pacakge
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile
+  (require 'use-package))
+
+;; requires
+(require 'use-package)
 (require 'xclip)
+(require 'idea-darkula-theme)
 (xclip-mode 1)
 
 ;; font

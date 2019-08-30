@@ -18,9 +18,6 @@ $ bin/zsh_install
 ### emacs
  `M-x list-package` to install xclip intellij-darcula-color-cheama
 
-### system
-`$ brew install reattach-to-user-namespace`
-
 ### terminal color schema
 https://cocopon.github.io/iceberg.vim/
 
