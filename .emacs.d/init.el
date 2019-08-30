@@ -5,12 +5,6 @@
 
 (package-initialize)
 
-(setq package-selected-packages
-      '(xclip
-        intellij-darcula-color-cheama
-	))
-(package-install-selected-packages)
-
 ;; osのクリップボードを使う("https://saitodev.co/article/Emacs%E3%81%A7%E3%82%AF%E3%83%AA%E3%83%83%E3%83%97%E3%83%9C%E3%83%BC%E3%83%89%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%82%B3%E3%83%94%E3%83%9A%E3%81%97%E3%81%9F%E3%81%84")もしかしたらtmuxを再起動した時にxclipが動かなくなるかも
 (require 'xclip)
 (xclip-mode 1)
@@ -119,7 +113,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (xclip idea-darkula-theme zenburn-theme))))
+ '(package-selected-packages
+   (quote
+    (yaml-mode scala-mode xclip idea-darkula-theme zenburn-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

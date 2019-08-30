@@ -3,6 +3,10 @@
 DIR=$(pwd)
 VSCODE="$HOME/Library/Application Support/Code/User"
 
+cp $DIR/zsh/.zprofile $HOME/
+
+cp $DIR/zsh/.zshrc $HOME/
+
 cp $DIR/.bash_profile $HOME/
 
 cp $DIR/.bashrc $HOME/
@@ -11,7 +15,7 @@ cp $DIR/.vimrc $HOME/
 
 cp $DIR/.tmux.conf $HOME/
 
-mkdir $HOME/.emacs.d
+mkdir -p  $HOME/.emacs.d
 cp $DIR/.emacs.d/init.el $HOME/.emacs.d/
 
 cp  $DIR/vscode/keybindings.json "$VSCODE/keybindings.json"

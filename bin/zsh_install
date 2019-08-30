@@ -1,13 +1,6 @@
 #!/bin/bash
 
 DIR=$(pwd)
-if type "zsh" > /dev/null 2>&1; then
-    echo "zsh is found! Setting install is suceess."     
-else
-    echo "zsh is NOT exist! execute brew install zsh"
-    brew update
-    brew install zsh
-fi
 
 git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 setopt EXTENDED_GLOB

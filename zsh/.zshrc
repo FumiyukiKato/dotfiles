@@ -26,13 +26,25 @@ colors
 PROMPT='%{${fg[cyan]}%}[%~] %T%{${reset_color}%}
 $ '
 
+# added by Anaconda3 5.0.1 installer
+export PATH="/usr/local/anaconda3/bin:$PATH"
+
+# initialize
+eval "$(rbenv init -)"
+eval "$(plenv init -)"
+
+# Go settings
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+export GOBIN=/Users/fumiyuki/go/bin
+
 ## Git branch
 autoload -Uz vcs_info
 setopt prompt_subst
 zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
+zstyle ':vcs_info:git:*' stagedstr "%F{green}!"
 zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
-zstyle ':vcs_info:*' formats "%F{green}%c%u[%b]%f"
+zstyle ':vcs_info:*' formats "%F{blue}%c%u[%b]%f"
 zstyle ':vcs_info:*' actionformats '[%b|%a]'
 precmd () { vcs_info }
 RPROMPT=$RPROMPT'${vcs_info_msg_0_}'
@@ -68,11 +80,7 @@ function tmux_automatically_attach_session()
         ! is_exists 'tmux' && return 1
 
         if is_tmux_runnning; then
-            echo "${fg_bold[red]} _____ __  __ _   ___  __ ${reset_color}"
-            echo "${fg_bold[red]}|_   _|  \/  | | | \ \/ / ${reset_color}"
-            echo "${fg_bold[red]}  | | | |\/| | | | |\  /  ${reset_color}"
-            echo "${fg_bold[red]}  | | | |  | | |_| |/  \  ${reset_color}"
-            echo "${fg_bold[red]}  |_| |_|  |_|\___//_/\_\ ${reset_color}"
+            echo "${fg_bold[red]} tmux is waking up...${reset_color}"
         elif is_screen_running; then
             echo "This is on screen."
         fi

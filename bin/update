@@ -1,7 +1,10 @@
 #!/usr/local/bin/bash
+DIR="$(pwd)"
+VSCODE="$HOME/Library/Application Support/Code/User"
 
-DIR="/Users/fumiyuki/Repository/github.com/FumiyukiKato/dotfiles"
-VSCODE="/Users/fumiyuki/Library/Application Support/Code/User"
+cp $HOME/.zprofile $DIR/zsh/.zprofile
+
+cp $HOME/.zshrc $DIR/zsh/.zshrc
 
 cp $HOME/.bash_profile $DIR/
 
