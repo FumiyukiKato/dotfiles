@@ -16,6 +16,11 @@
 (require 'use-package)
 (require 'xclip)
 (require 'idea-darkula-theme)
+(require 'go-mode)
+(require 'multiple-cursors)
+(require 'mc-extras)
+(require 'region-bindings-mode)
+
 (xclip-mode 1)
 
 ;; font
@@ -124,7 +129,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yaml-mode scala-mode xclip idea-darkula-theme zenburn-theme))))
+    (rust-auto-use rust-mode live-py-mode yaml-mode scala-mode xclip idea-darkula-theme zenburn-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -142,3 +147,13 @@
 (mouse-wheel-mode t)
 
 
+;; マルチカーソル操作設定
+(region-bindings-mode-enable)
+(define-key region-bindings-mode-map (kbd "a") 'mc/mark-all-like-this-dwim)
+(define-key region-bindings-mode-map (kbd "p") 'mc/mark-previous-like-this)
+(define-key region-bindings-mode-map (kbd "n") 'mc/mark-next-like-this)
+(define-key region-bindings-mode-map (kbd "u") 'mc/remove-current-cursor)
+(define-key region-bindings-mode-map (kbd "<tab>") 'mc/cycle-forward)
+(define-key region-bindings-mode-map (kbd "<backtab>") 'mc/cycle-backward)
+(define-key region-bindings-mode-map (kbd "C-;") 'multiple-cursors-mode)
+(global-set-key (kbd "C-;") 'mc/mark-all-dwim)

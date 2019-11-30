@@ -25,3 +25,5 @@ source ~/.bashrc
 
 export GOBIN=/Users/fumiyuki/go/bin
 
+
+export PATH="$HOME/.cargo/bin:$PATH"

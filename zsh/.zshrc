@@ -27,16 +27,25 @@ PROMPT='%{${fg[cyan]}%}[%~] %W %T%{${reset_color}%}
 $ '
 
 # added by Anaconda3 5.0.1 installer
-export PATH="/usr/local/anaconda3/bin:$PATH"
+# export PATH="/usr/local/anaconda3/bin:$PATH"
 
-# initialize
+export PATH="$HOME/.pyenv/bin:$PATH"
+export PATH=$HOME/.wantedly/bin:$PATH
+# Laguage Version Controllers
 eval "$(rbenv init -)"
 eval "$(plenv init -)"
+eval "$(pyenv init -)"
+eval "$(nodenv init - )"
+eval "$(pyenv virtualenv-init -)"
+# How to use https://qiita.com/niwak2/items/5490607be32202ce1314
 
 # Go settings
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export GOBIN=/Users/fumiyuki/go/bin
+
+# Rust Cargo settings
+export PATH=$PATH:$HOME/.cargo/bin
 
 ## Git branch
 autoload -Uz vcs_info
@@ -55,6 +64,11 @@ function cdls() {
 }
 alias cd='cdls'
 
+# upzip tar
+function upzipTar() {
+  tar -zxvf "$@"
+}
+alias ta='upzipTar'
 
 # Binds peco command history search
 function _peco_history_selection() {
@@ -80,7 +94,7 @@ function tmux_automatically_attach_session()
         ! is_exists 'tmux' && return 1
 
         if is_tmux_runnning; then
-            echo "${fg_bold[red]} tmux is waking up...${reset_color}"
+            echo "${fg_bold[red]} open tmux.${reset_color}"
         elif is_screen_running; then
             echo "This is on screen."
         fi

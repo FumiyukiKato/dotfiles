@@ -5,5 +5,6 @@
     "workbench.editor.showTabs": true,
     "python.jediEnabled": false,
     "explorer.confirmDelete": false,
-    "remote.SSH.showLoginTerminal": true
+    "remote.SSH.showLoginTerminal": true,
+    "workbench.editor.enablePreview": false
 }
