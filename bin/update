@@ -1,20 +1,28 @@
-#!/usr/local/bin/bash
+#!/bin/bash
+
+# macからリポジトリにアップデートをかける
+
 DIR="$(pwd)"
+# vscodeの設定ファイルも一応
 VSCODE="$HOME/Library/Application Support/Code/User"
 
-cp $HOME/.zprofile $DIR/zsh/.zprofile
+# zsh
+cp $HOME/.zprofile $DIR/zsh/
+cp $HOME/.zshrc $DIR/zsh/
 
-cp $HOME/.zshrc $DIR/zsh/.zshrc
+# bash(全く使っていない)
+cp $HOME/.bash_profile $DIR/bash/
+cp $HOME/.bashrc $DIR/bash/
 
-cp $HOME/.bash_profile $DIR/
+# vim(ほぼ使っていない)
+cp $HOME/.vimrc $DIR/vim/
 
-cp $HOME/.bashrc $DIR/
+# tmux
+cp $HOME/.tmux.conf $DIR/tmux/
 
-cp $HOME/.vimrc $DIR/
+# emacs
+cp $HOME/.emacs.d/init.el $DIR/emacs/
 
-cp $HOME/.tmux.conf $DIR/
-
-cp $HOME/.emacs.d/init.el $DIR/.emacs.d/
 
 cp "$VSCODE/keybindings.json" $DIR/vscode/
 cp "$VSCODE/settings.json" $DIR/vscode/

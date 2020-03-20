@@ -1,10 +1,21 @@
 {
     "breadcrumbs.enabled": true,
     "workbench.colorTheme": "Darcula Theme from IntelliJ",
-    "window.zoomLevel": 0,
+    "window.zoomLevel": 2,
     "workbench.editor.showTabs": true,
     "python.jediEnabled": false,
     "explorer.confirmDelete": false,
     "remote.SSH.showLoginTerminal": true,
-    "workbench.editor.enablePreview": false
+    "workbench.editor.enablePreview": false,
+    "C_Cpp.updateChannel": "Insiders",
+    "[cpp]": {},
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }

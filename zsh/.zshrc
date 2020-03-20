@@ -1,51 +1,64 @@
 # Fumiyuki Kato
 
 ################################################
-# Aliases
+
+## Aliases
 alias ls='ls -FG'
 alias vim='nvim'
 alias vi='vi'
 alias em="emacs"
 
-# historysize
+
+## historysize
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
 
-# Source Prezto.
+
+## Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Customize to your needs...
+## Customize to your needs...
 fpath=(/usr/local/share/zsh-completions $fpath)
 
-# Prompt
+
+## Prompt
 autoload colors
 colors
 PROMPT='%{${fg[cyan]}%}[%~] %W %T%{${reset_color}%}
 $ '
 
+
+## Anaconda3
+# もう使っていない
 # added by Anaconda3 5.0.1 installer
 # export PATH="/usr/local/anaconda3/bin:$PATH"
 
+
+## direnv
+eval "$(direnv hook zsh)"
+
+## env
+
+export PATH="$HOME/.goenv/bin:$PATH"
 export PATH="$HOME/.pyenv/bin:$PATH"
 export PATH=$HOME/.wantedly/bin:$PATH
+
 # Laguage Version Controllers
 eval "$(rbenv init -)"
 eval "$(plenv init -)"
 eval "$(pyenv init -)"
-eval "$(nodenv init - )"
+eval "$(nodenv init -)"
+eval "$(goenv init -)"
 eval "$(pyenv virtualenv-init -)"
-# How to use https://qiita.com/niwak2/items/5490607be32202ce1314
 
-# Go settings
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-export GOBIN=/Users/fumiyuki/go/bin
 
-# Rust Cargo settings
+## Rust
+# Cargo settings
 export PATH=$PATH:$HOME/.cargo/bin
+
 
 ## Git branch
 autoload -Uz vcs_info
@@ -57,6 +70,9 @@ zstyle ':vcs_info:*' formats "%F{blue}%c%u[%b]%f"
 zstyle ':vcs_info:*' actionformats '[%b|%a]'
 precmd () { vcs_info }
 RPROMPT=$RPROMPT'${vcs_info_msg_0_}'
+
+
+## functions
 
 # cdls
 function cdls() {
@@ -70,16 +86,17 @@ function upzipTar() {
 }
 alias ta='upzipTar'
 
-# Binds peco command history search
+# command history search using peco
 function _peco_history_selection() {
     BUFFER=`history -n 1 | tail -r  | awk '!a[$0]++' | peco --query "$BUFFER"`
     CURSOR=$#BUFFER
     zle reset-prompt
 }
+# bind
 zle -N peco_history_selection _peco_history_selection
 bindkey '^r' peco_history_selection
 
-# Tmux
+# Tmux initialized function
 function is_exists() { type "$1" >/dev/null 2>&1; return $?; }
 function is_osx() { [[ $OSTYPE == darwin* ]]; }
 function is_screen_running() { [ ! -z "$STY" ]; }
@@ -137,3 +154,10 @@ function tmux_automatically_attach_session()
     fi
 }
 tmux_automatically_attach_session
+
+
+## Initial
+# 重複パスを登録しない
+# 最後に書いたら動いた
+# http://yonchu.hatenablog.com/entry/20120415/1334506855
+typeset -U path cdpath fpath manpath

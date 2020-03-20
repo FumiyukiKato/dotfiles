@@ -1,23 +1,32 @@
 #!/bin/bash
 
+# リポジトリからOSXにインストール
+
 DIR=$(pwd)
-VSCODE="$HOME/Library/Application Support/Code/User"
 
+# zsh
 cp $DIR/zsh/.zprofile $HOME/
-
 cp $DIR/zsh/.zshrc $HOME/
 
-cp $DIR/.bash_profile $HOME/
+#bash
+cp $DIR/bash/.bash_profile $HOME/
+cp $DIR/bash/.bashrc $HOME/
 
-cp $DIR/.bashrc $HOME/
+# vim
+cp $DIR/vim/.vimrc $HOME/
 
-cp $DIR/.vimrc $HOME/
+# tmux
+cp $DIR/tmux/.tmux.conf $HOME/
 
-cp $DIR/.tmux.conf $HOME/
-
+# emacs
 mkdir -p  $HOME/.emacs.d
-cp $DIR/.emacs.d/init.el $HOME/.emacs.d/
+cp $DIR/emacs/init.el $HOME/.emacs.d/
 
-cp  $DIR/vscode/keybindings.json "$VSCODE/keybindings.json"
-cp  $DIR/vscode/settings.json "$VSCODE/settings.json"
+
+# vscodeはあるかわからんし手動でよさそう
+
+echo "this script doesn't install vscode files, you can manually install"
+# VSCODE="$HOME/Library/Application Support/Code/User"
+# cp  $DIR/vscode/keybindings.json "$VSCODE/keybindings.json"
+# cp  $DIR/vscode/settings.json "$VSCODE/settings.json"
 
