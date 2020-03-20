@@ -2,27 +2,15 @@
 configuration files
 
 ### Install
-
+(if zsh setting isn't yet)
 ```
-$ brew update
-$ brew install zsh
-
-$ sudo vi /etc/shells # add "/usr/local/bin/zsh"
+$ sudo vi /etc/shells # ++"/usr/local/bin/zsh"
 $ chsh -s /usr/local/bin/zsh
-$ zsh
-
-$ cd dotfiles/
-$ bin/zsh_install
 ```
 
-### emacs
-- List packages `M-x list-package`
-- Move to next window `C-x o`
-- plugins
- - xclip 
- - idea-darkula-theme
- - ...
+```
+$ bin/bootstrap
+```
 
-### terminal color schema
+### OSX terminal color schema
 https://cocopon.github.io/iceberg.vim/
-
