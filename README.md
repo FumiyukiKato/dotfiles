@@ -2,14 +2,15 @@
 configuration files
 
 ### Install
-(if zsh setting isn't yet)
+```
+$ bin/bootstrap
+```
+
+
+( unless `[[$SHELL =~ zsh]]`)
 ```
 $ sudo vi /etc/shells # ++"/usr/local/bin/zsh"
 $ chsh -s /usr/local/bin/zsh
-```
-
-```
-$ bin/bootstrap
 ```
 
 ### OSX terminal color schema
