@@ -26,4 +26,3 @@ cp $HOME/.emacs.d/init.el $DIR/emacs/
 
 cp "$VSCODE/keybindings.json" $DIR/vscode/
 cp "$VSCODE/settings.json" $DIR/vscode/
-

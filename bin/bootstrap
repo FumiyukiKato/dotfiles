@@ -1,0 +1,60 @@
+#!/bin/bash
+
+## update package managers
+if !(type "brew" > /dev/null 2>&1); then
+    if [ "$(uname)" == 'Darwin' ]; then
+   	    echo "install package manager homebrew from https://brew.sh/index_ja"
+	    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+	    echo "installing brew is finished"
+		brew update
+	fi
+fi
+
+## remind installing color schema for mac ternmial
+echo "############## NOTIFICATION ##################"
+echo "Color schema 'Iceberg' is here https://cocopon.github.io/iceberg.vim/"
+echo "############## NOTIFICATION ##################"
+
+## install zsh
+if [[ $SHELL =~ zsh ]]; then
+	echo "you shell is zsh...good!!"
+else
+	echo "your shell is not zsh...!!"
+	echo "you should follow instructions"
+	echo "1. Install zsh"
+	echo "    OSX: $ brew install zsh"
+	echo "    Linux: $ sudo apt-get install zsh"
+	echo "2. Set your default shell into zsh"
+	echo "    $ sudo vi /etc/shells"
+	echo "        and add this '/usr/local/bin/zsh'"
+	echo "    $ chsh -s /usr/local/bin/zsh"
+	echo "3. Wake zsh up"
+	echo "    $ zsh"
+	exit 1
+fi
+# install prezto
+bin/zsh_install
+
+## install tmux
+if type "tmux" > /dev/null 2>&1; then	
+	if !(type "brew" > /dev/null 2>&1); then
+		brew install tmux
+	else
+		echo "Tmux: you have to build and install tmux from https://github.com/tmux/tmux"
+		exit 1
+	fi	
+fi
+
+## install latest emacs
+if !(type "brew" > /dev/null 2>&1); then
+	brew install emacs
+fi
+
+# ubuntu
+if !(type "apt-get" > /dev/null 2>&1); then
+	apt-get update
+	apt-get install emacs
+fi
+
+## install dotfiles
+bin/install
