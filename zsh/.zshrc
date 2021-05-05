@@ -1,64 +1,16 @@
-# Fumiyuki Kato
-
-################################################
-
-## Aliases
-alias ls='ls -FG'
-alias vim='nvim'
-alias vi='vi'
 alias em="emacs"
-
+alias ls='ls -FG'
 
 ## historysize
 HISTFILE=~/.zsh_history
-HISTSIZE=1000000
-SAVEHIST=1000000
-
-
-## Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
-## Customize to your needs...
-fpath=(/usr/local/share/zsh-completions $fpath)
-
+HISTSIZE=100000
+SAVEHIST=100000
 
 ## Prompt
 autoload colors
 colors
 PROMPT='%{${fg[cyan]}%}[%~] %W %T%{${reset_color}%}
 $ '
-
-
-## Anaconda3
-# もう使っていない
-# added by Anaconda3 5.0.1 installer
-# export PATH="/usr/local/anaconda3/bin:$PATH"
-
-
-## direnv
-eval "$(direnv hook zsh)"
-
-## env
-
-export PATH="$HOME/.goenv/bin:$PATH"
-export PATH="$HOME/.pyenv/bin:$PATH"
-export PATH=$HOME/.wantedly/bin:$PATH
-
-# Laguage Version Controllers
-eval "$(rbenv init -)"
-eval "$(plenv init -)"
-eval "$(pyenv init -)"
-eval "$(nodenv init -)"
-eval "$(goenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-
-## Rust
-# Cargo settings
-export PATH=$PATH:$HOME/.cargo/bin
-
 
 ## Git branch
 autoload -Uz vcs_info
@@ -71,93 +23,53 @@ zstyle ':vcs_info:*' actionformats '[%b|%a]'
 precmd () { vcs_info }
 RPROMPT=$RPROMPT'${vcs_info_msg_0_}'
 
-
 ## functions
 
 # cdls
 function cdls() {
-    \cd "$@" && ls
+    cd "$@" && ls
 }
 alias cd='cdls'
 
-# upzip tar
-function upzipTar() {
-  tar -zxvf "$@"
+function cdh() {
+	local res=$(z | sort -rn | cut -c 12- | fzf)
+	cd $res
 }
-alias ta='upzipTar'
 
-# command history search using peco
-function _peco_history_selection() {
-    BUFFER=`history -n 1 | tail -r  | awk '!a[$0]++' | peco --query "$BUFFER"`
-    CURSOR=$#BUFFER
-    zle reset-prompt
+function select-history() {
+  BUFFER=$(history -n -r 1 | fzf --no-sort +m --query "$LBUFFER" --prompt="History > ")
+  CURSOR=$#BUFFER
 }
-# bind
-zle -N peco_history_selection _peco_history_selection
-bindkey '^r' peco_history_selection
+zle -N select-history
+bindkey '^r' select-history
 
-# Tmux initialized function
-function is_exists() { type "$1" >/dev/null 2>&1; return $?; }
-function is_osx() { [[ $OSTYPE == darwin* ]]; }
-function is_screen_running() { [ ! -z "$STY" ]; }
-function is_tmux_runnning() { [ ! -z "$TMUX" ]; }
-function is_screen_or_tmux_running() { is_screen_running || is_tmux_runnning; }
-function shell_has_started_interactively() { [ ! -z "$PS1" ]; }
-function is_ssh_running() { [ ! -z "$SSH_CONECTION" ]; }
+# https://github.com/rupa/z
+. /usr/local/bin/z
 
-function tmux_automatically_attach_session()
-{
-    if is_screen_or_tmux_running; then
-        ! is_exists 'tmux' && return 1
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
-        if is_tmux_runnning; then
-            echo "${fg_bold[red]} open tmux.${reset_color}"
-        elif is_screen_running; then
-            echo "This is on screen."
-        fi
-    else
-        if shell_has_started_interactively && ! is_ssh_running; then
-            if ! is_exists 'tmux'; then
-                echo 'Error: tmux command not found' 2>&1
-                return 1
-            fi
+# goenv
+export GOENV_ROOT="$HOME/.goenv"
+export PATH="$GOENV_ROOT/bin:$PATH"
+eval "$(goenv init -)"
+export PATH="$GOROOT/bin:$PATH"
+export PATH="$PATH:$GOPATH/bin"
 
-            if tmux has-session >/dev/null 2>&1 && tmux list-sessions | grep -qE '.*]$'; then
-                # detached session exists
-                tmux list-sessions
-                echo -n "Tmux: attach? (y/N/num) "
-                read
-                if [[ "$REPLY" =~ ^[Yy]$ ]] || [[ "$REPLY" == '' ]]; then
-                    tmux attach-session
-                    if [ $? -eq 0 ]; then
-                        echo "$(tmux -V) attached session"
-                        return 0
-                    fi
-                elif [[ "$REPLY" =~ ^[0-9]+$ ]]; then
-                    tmux attach -t "$REPLY"
-                    if [ $? -eq 0 ]; then
-                        echo "$(tmux -V) attached session"
-                        return 0
-                    fi
-                fi
-            fi
+# java (openjdk 15 via homebrew)
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
+export CPPFLAGS="-I/usr/local/opt/openjdk/include"
 
-            if is_osx && is_exists 'reattach-to-user-namespace'; then
-                # on OS X force tmux's default command
-                # to spawn a shell in the user's namespace
-                tmux_config=$(cat $HOME/.tmux.conf <(echo 'set-option -g default-command "reattach-to-user-namespace -l $SHELL"'))
-                tmux -f <(echo "$tmux_config") new-session && echo "$(tmux -V) created new session supported OS X"
-            else
-                tmux new-session && echo "tmux created new session"
-            fi
-        fi
-    fi
-}
-tmux_automatically_attach_session
+# wake up ssh-agent 
+eval "$(ssh-agent -s)"
 
+# add sbin to PATH
+export PATH="/usr/local/sbin:$PATH"
 
-## Initial
-# 重複パスを登録しない
-# 最後に書いたら動いた
-# http://yonchu.hatenablog.com/entry/20120415/1334506855
-typeset -U path cdpath fpath manpath
+# nodebrew
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+tmux
+tmux ls

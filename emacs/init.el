@@ -1,5 +1,7 @@
 ;; Pacakges
 
+(setq byte-compile-warnings '(cl-functions))
+
 ;; https://qiita.com/yuze/items/a145b1e3edb6d0c24cbf
 
 ;; straight.el
@@ -21,8 +23,8 @@
 (straight-use-package 'helm)
 (helm-mode 1)
 (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
-(define-key global-map (kbd "C-x C-f") 'helm-find-files)
-(define-key global-map (kbd "C-x C-r") 'helm-recentf)
+(define-key global-map (kbd "C-x p") 'helm-find-files)
+(define-key global-map (kbd "C-x r") 'helm-recentf)
 (define-key helm-map (kbd "C-h") 'helm-ff-delete-char-backward)
 (define-key helm-find-files-map (kbd "TAB") 'helm-execute-persistent-action)
 (define-key global-map (kbd "M-x") 'helm-M-x)
@@ -31,8 +33,10 @@
 
 
 ;; helm-git-grep
-;; https://kiririmode.hatenablog.jp/entry/20171224/1514069984
-(straight-use-package 'helm-git-grep)
+;; https://github.com/yasuyk/helm-git-grep#installation
+(straight-use-package 'wgrep)
+(straight-use-package 'compile)
+(straight-use-package 'helm-git-grep) ;; Not necessary if installed by package.el
 (global-set-key (kbd "C-x g") 'helm-git-grep)
 ;; Invoke `helm-git-grep' from isearch.
 (define-key isearch-mode-map (kbd "C-x g") 'helm-git-grep-from-isearch)
@@ -70,7 +74,7 @@
 (define-key company-search-map (kbd "C-n") 'company-select-next)
 (define-key company-search-map (kbd "C-p") 'company-select-previous)
 (define-key company-active-map (kbd "C-s") 'company-filter-candidates)
-(define-key company-active-map (kbd "C-i") 'company-complete-selection)
+(define-key company-active-map (kbd "C-[") 'company-complete-selection)
 (define-key company-active-map [tab] 'company-complete-selection)
 (define-key company-active-map (kbd "C-f") 'company-complete-selection)
 (define-key emacs-lisp-mode-map (kbd "C-M-i") 'company-complete)
@@ -88,16 +92,43 @@
 (migemo-init)
 
 ;; swiper
-(global-set-key "\C-s" 'swiper)
+(global-set-key (kbd "C-s") 'swiper)
 (defvar swiper-include-line-number-in-search t)
 (straight-use-package 'avy)
 (straight-use-package 'swiper-helm)
 (straight-use-package 'avy-migemo)
 (avy-migemo-mode 1)
 
-;; idea-darkula
-(straight-use-package 'idea-darkula-theme)
-(load-theme 'idea-darkula t)
+;; multi-cursor
+;; 基本的には，範囲設定して，Ctrl-tで同じ文字を選択する
+;; 縦に伸ばしていくのは，，，
+;; 範囲選択した後にCtrl-x-tを押すとその行の先頭にいく
+;; コメントアウトなどに使える
+(straight-use-package 'multiple-cursors)
+(straight-use-package 'smartrep)
+(require 'smartrep)
+(global-set-key (kbd "C-x t") 'mc/edit-lines)
+(declare-function smartrep-define-key "smartrep")
+(global-unset-key "\C-t")
+(smartrep-define-key global-map "C-t"
+  '(("C-t"      . 'mc/mark-next-like-this)
+    ("n"        . 'mc/mark-next-like-this)
+    ("p"        . 'mc/mark-previous-like-this)
+    ("m"        . 'mc/mark-more-like-this-extended)
+    ("u"        . 'mc/unmark-next-like-this)
+    ("U"        . 'mc/unmark-previous-like-this)
+    ("s"        . 'mc/skip-to-next-like-this)
+    ("S"        . 'mc/skip-to-previous-like-this)
+    ("*"        . 'mc/mark-all-like-this)
+    ("d"        . 'mc/mark-all-like-this-dwim)
+    ("i"        . 'mc/insert-numbers)
+    ("o"        . 'mc/sort-regions)
+    ("O"        . 'mc/reverse-regions)))
+
+(smartrep-define-key
+    global-map "M-g"
+  '(("n" . next-line)
+    ("p" . previous-line)))
 
 ;; General
 ;; https://techblog.recochoku.jp/1403
@@ -114,7 +145,7 @@
 ;; do not make backup file (name starts with "#")
 (setq make-backup-files nil)
 (setq auto-save-default nil)
- 
+
 ;;BEEP disable
 (setq ring-bell-function 'ignore)
  
@@ -162,10 +193,21 @@
 (mouse-wheel-mode t)
  
 ;; クリップボード共有
-(setq x-select-enable-clipboard t)
+;; https://qiita.com/tstomoki/items/24d63217f797c6929a23
+(defun copy-from-osx ()
+ (shell-command-to-string "pbpaste"))
+
+(defun paste-to-osx (text &optional push)
+ (let ((process-connection-type nil))
+     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+       (process-send-string proc text)
+       (process-send-eof proc))))
+
+(setq interprogram-cut-function 'paste-to-osx)
+(setq interprogram-paste-function 'copy-from-osx)
  
 ;; カーソルの設定
-(set-cursor-color "blue")
+(set-cursor-color "black")
 (setq blink-cursor-interval 0.7)
 (setq blink-cursor-delay 1.0)
 (blink-cursor-mode 1)
@@ -174,7 +216,7 @@
 (add-to-list 'default-frame-alist '(font . "ricty-12"))
 
 ;; color theme
-(load-theme 'idea-darkula t)
+(load-theme 'tango-dark t)
 
 ;; 環境を日本語、UTF-8にする
 (set-locale-environment nil)
@@ -186,8 +228,8 @@
 (set-default-coding-systems 'utf-8)
 (prefer-coding-system 'utf-8)
 
-; 5 桁分の領域を確保して行番号のあとにスペースを入れる
-(setq linum-format "%4d ") 
+;; 5 桁分の領域を確保して行番号のあとにスペースを入れる
+(setq linum-format "%4d ")
 
 ;; 対応する括弧をハイライトする
 (show-paren-mode 1)
@@ -198,7 +240,7 @@
 ;; リージョンを色付きにする
 (transient-mark-mode 1)
 
-; cursor の blink を止める
+;; cursor の blink を止める
 (blink-cursor-mode 0)
 
 ;; 矩形選択モードをC-rに割り当てる（元々のreverse検索みたいなやつ使ったことないので）
@@ -210,11 +252,9 @@
 ;; 行数を表示する
 (global-linum-mode t)
 
-;; Macのoptionをメタキーにする
-(setq mac-option-modifier 'meta)
-
 ;; タブインデントを有効にする
-(setq indent-tabs-mode t)
+(setq-default indent-tabs-mode t)
+(global-set-key (kbd"TAB") (kbd "C-q TAB"))
 
 ;; tabサイズ
 (setq default-tab-width 4)
@@ -225,3 +265,15 @@
 ;; ツールバーを隠す
 (when (display-graphic-p)
   (tool-bar-mode -1))
+
+;; C-z を undo に
+;; (define-key global-map (kbd "C-z") 'undo)
+
+;; redo undo http://emacs.rubikitch.com/sd1509-safeguard-undo-redo/
+;; TODO: 動かない
+;; (straight-use-package 'redo+)
+;; (global-set-key (kbd "C-z") 'redo)
+;; (setq undo-no-redo t)
+
+;; Macのoptionをメタキーにする
+(setq mac-option-modifier 'meta)
