@@ -31,6 +31,8 @@
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 (global-set-key (kbd "C-x b") 'helm-mini)
 
+;; rust
+(straight-use-package 'rust-mode)
 
 ;; helm-git-grep
 ;; https://github.com/yasuyk/helm-git-grep#installation
@@ -266,14 +268,11 @@
 (when (display-graphic-p)
   (tool-bar-mode -1))
 
-;; C-z を undo に
-;; (define-key global-map (kbd "C-z") 'undo)
-
-;; redo undo http://emacs.rubikitch.com/sd1509-safeguard-undo-redo/
-;; TODO: 動かない
-;; (straight-use-package 'redo+)
-;; (global-set-key (kbd "C-z") 'redo)
-;; (setq undo-no-redo t)
+;; undo-tree.elという拡張を使う
+;; https://qiita.com/takc923/items/c3d64b55fc4f3a3b0838
+(straight-use-package 'undo-tree)
+(global-undo-tree-mode t)
+(global-set-key (kbd "M--") 'undo-tree-redo)
 
 ;; Macのoptionをメタキーにする
 (setq mac-option-modifier 'meta)
